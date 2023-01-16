@@ -12,6 +12,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddTransient<ILancheRepository, LancheRepository>();
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 
+// Ativa a Session
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +33,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Ativa a Session
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
